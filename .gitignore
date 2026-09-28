@@ -1,0 +1,46 @@
+# --- Secretos / entorno ---
+# Sin plantilla de credenciales a nivel de workspace: usa la CLI del proveedor
+# o el gestor de secretos aprobado (ver README.md / docs/setup.md).
+# Cualquier .env* local entre aquí, nunca en el repositorio.
+.env
+.env.*
+
+# --- Terraform: generados y estado ---
+# Estado siempre fuera de control de versiones.
+.terraform/
+.terraform.tfstate.lock.info
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+# NOTA: .terraform.lock.hcl NO se ignora; debe versionarse.
+
+# Plan files (pueden contener estado plano / datos sensibles)
+*.tfplan
+plan.out
+plan.txt
+
+# Ejemplos de tfvars NO sensibles son trackables; ignora los reales:
+*.tfvars
+!*.tfvars.example
+!example.tfvars
+
+# --- Backends locales en fichero ---
+terraform.tfstate.d/
+
+# --- Clones de repos objetivo / temporales ---
+# Los clones independientes bajo projects/ son repos separados y no forman
+# parte de las versiones de este workspace; solo se trackea .gitkeep.
+projects/*
+!projects/.gitkeep
+dist/
+out/
+tmp/
+*.log
+.DS_Store
+Thumbs.db
