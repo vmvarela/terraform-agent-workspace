@@ -23,7 +23,9 @@ git clone <url-del-repo-objetivo> projects/<nombre>
 | `memory/` | Libros de registro: errores conocidos y lecciones de DevOps. Sin entradas de partida. |
 | `docs/setup.md` | Pasos de configuración del workspace y del agente. |
 | `projects/` | Clones de los repos de Terraform con los que trabaja el agente. Vacío de partida (`.gitkeep`). |
-| `.opencode/` | Configuración del agente (copiada del workspace local a petición del usuario; ver abajo). |
+| `.opencode/` | Configuración de OpenCode (copiada del workspace local a petición del usuario). |
+| `.mcp.json`, `.codex/config.toml` | Servidores MCP portables: Atlassian (remoto) y Playwright (local). Ver `docs/setup.md`. |
+| `CLAUDE.md`, `.github/copilot-instructions.md` | Puentes de instrucciones para Claude Code y GitHub Copilot. Ver `docs/setup.md`. |
 
 ## Qué contiene `projects/`
 
@@ -36,6 +38,23 @@ Este repo **no incluye** `.env` ni plantillas de credenciales: las credenciales 
 ## Configuración de OpenCode
 
 La configuración local del agente (`.opencode/`) **ya ha sido copiada a este repo a petición del usuario** (copia exacta). Incluye ajustes personales de modelos y servidores MCP (Atlassian, Playwright) que pueden requerir acceso o adaptación a tu cuenta. `AGENTS.md`, `context/` y `.agents/skills/` definen las reglas de operación legibles por cualquier agente.
+
+## Clientes de agente y servidores MCP
+
+Varios clientes, con la misma pareja de servidores MCP:
+
+| Cliente | Configuración | Detalles |
+| --- | --- | --- |
+| OpenCode | `.opencode/opencode.json` (ya presente) | Copia exacta a petición del usuario; puede requerir adaptación a tu cuenta. |
+| Codex (CLI/IDE) | `.codex/config.toml` | El project config solo se carga cuando el workspace está marcado como **trusted**. |
+| GitHub Copilot (VS Code / Copilot CLI) | `.mcp.json` + `.github/copilot-instructions.md` | `.mcp.json` portable (formato `mcpServers`). VS Code puede requerir `chat.useAgentsMdFile` para descubrir `AGENTS.md` de forma nativa; las instrucciones de Copilot apuntan a la guía canónica. |
+| Claude Code | `.mcp.json` + `CLAUDE.md` | `CLAUDE.md` solo importa `@AGENTS.md`. La aprobación de servidores y el OAuth de Atlassian son por cliente. |
+
+- **Atlassian**: servidor remoto (`https://mcp.atlassian.com/v2/mcp`) en `.mcp.json` y `.codex/config.toml`. Sin credenciales en el repo: el OAuth se autoriza por cliente.
+- **Playwright**: servidor local por `npx @playwright/mcp@latest --caps=core,network,vision`. `@latest` es mutable; puede fijarse a una versión concreta para entornos estables.
+- En el `.mcp.json` compartido no se declara `type` explícito en Playwright: `command`/`args` denotan stdio y dan máxima portabilidad (Claude, VS Code Agent Host, Copilot CLI).
+- **No hace falta** `.vscode/mcp.json`: el `.mcp.json` portable lo cubre. El Copilot Cloud Agent no está configurado aquí (usa settings del repo en GitHub y no soporta el OAuth remoto de Atlassian directamente).
+- Detalles de onboarding en `docs/setup.md`.
 
 ## Advertencia importante
 

@@ -30,9 +30,27 @@ opencode              # ejecutado en la raíz del workspace
 
 Al arrancar desde la raíz, el agente lee `AGENTS.md` (reglas de operación) y la configuración del workspace.
 
-## 4. Configuración de OpenCode
+## 4. Configuración de clientes y servidores MCP
 
-La configuración local del agente (`.opencode/`) **ya ha sido copiada a este repo a petición del usuario** (copia exacta). Incluye ajustes personales de modelos y servidores MCP (Atlassian, Playwright) que pueden requerir acceso o adaptación a tu cuenta. `AGENTS.md`, `context/` y `.agents/skills/` definen las reglas de operación legibles por cualquier agente.
+Multi-cliente: los mismos servidores MCP están disponibles vía archivos portables, sin credenciales en el repo.
+
+| Cliente | Configuración usada | Notas |
+| --- | --- | --- |
+| OpenCode | `.opencode/opencode.json` (ya presente) | Copia exacta a petición del usuario; puede requerir adaptación a tu cuenta. No modificar aquí. |
+| Codex (CLI/IDE) | `.codex/config.toml` | El project config solo se carga cuando el workspace está marcado como **trusted**. Atlassian OAuth autorizable por cliente. |
+| GitHub Copilot (VS Code / Copilot CLI) | `.mcp.json` + `.github/copilot-instructions.md` | `.mcp.json` portable (formato `mcpServers`). VS Code Local Agent puede requerir `chat.useAgentsMdFile` para descubrir `AGENTS.md` de forma nativa; las instrucciones de Copilot apuntan a la guía canónica (`AGENTS.md`). |
+| Claude Code | `.mcp.json` + `CLAUDE.md` | `CLAUDE.md` solo importa `@AGENTS.md`. Aprobación de servidores y OAuth de Atlassian son por cliente. |
+
+Servidores MCP configurados (en `.mcp.json` y `.codex/config.toml`):
+
+- **Atlassian** — remoto: `https://mcp.atlassian.com/v2/mcp` (formato `http`). Sin credenciales ni tokens en el repo: el OAuth es por cliente y se autoriza al primer uso en cada uno.
+- **Playwright** — local por `npx` con `@playwright/mcp@latest` y `--caps=core,network,vision`. En el `.mcp.json` compartido se omite `type` explícito: `command`/`args` denotan stdio, lo que da máxima portabilidad (Claude, VS Code Agent Host, Copilot CLI). El tag `@latest` es mutable; puede fijarse a una versión concreta si el propietario necesita estabilidad.
+
+Notas de alcance:
+
+- **`.vscode/mcp.json` no es necesario** y no existe: el `.mcp.json` portable es el formato con soporte nativo en VS Code. Tampoco hay `.github/mcp.json` ni configuración en el home del usuario.
+- **Copilot Cloud Agent no está configurado aquí**: usa ajustes del repositorio en GitHub (no archivos locales) y no soporta el OAuth remoto de Atlassian directamente.
+- **Credenciales**: nunca en ficheros del repo (tokens OAuth, `clientId`, headers, `.env` de workspace). Atlassian se autoriza vía OAuth por cliente y las credenciales del proveedor de nube son a nivel usuario (ver §5).
 
 ## 5. Credenciales
 

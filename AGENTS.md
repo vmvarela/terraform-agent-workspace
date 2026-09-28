@@ -31,6 +31,7 @@ Las guías de `context/terraform/` y los skills son **referencia genérica compl
 | Tarea | Leer / usar |
 | --- | --- |
 | Arrancar o configurar el workspace | `README.md`, `docs/setup.md` |
+| Configurar el cliente/MCP (OpenCode, Codex, Copilot, Claude Code) | `docs/setup.md` (§ Configuración de clientes y MCP) |
 | Escribir o revisar HCL (en un repo objetivo) | `context/terraform/style.md` |
 | Estado, backend, imports, migraciones (en un repo objetivo) | `context/terraform/state-and-backends.md` |
 | Herramientas locales (CLI, versiones) | `context/tooling.md` |

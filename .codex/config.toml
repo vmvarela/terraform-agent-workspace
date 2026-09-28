@@ -1,0 +1,10 @@
+# Configuración de Codex (CLI/IDE) para este workspace.
+# El project config solo se carga cuando el workspace está marcado como trusted.
+# Credenciales: ninguna aquí. Atlassian se autoriza vía OAuth por cliente.
+
+[mcp_servers.atlassian]
+url = "https://mcp.atlassian.com/v2/mcp"
+
+[mcp_servers.playwright]
+command = "npx"
+args = ["-y", "@playwright/mcp@latest", "--caps=core,network,vision"]
