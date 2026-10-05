@@ -1,6 +1,47 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "plugins": ["oh-my-opencode-slim@2.2.25"],
+  "plugins": [
+    {
+      "package": "opencode-model-aliases@latest",
+      "options": {
+        "debug": true,
+        "aliases": {
+          "openai/gpt-luna": {
+            "match": "openai/gpt-*-luna",
+            "name": "GPT Luna (latest)",
+            "select": { "strategy": "latest" }
+          },
+          "openai/gpt-sol": {
+            "match": "openai/gpt-*-sol",
+            "name": "GPT Sol (latest)",
+            "select": { "strategy": "latest" }
+          },
+          "opencode-go/deepseek-flash": {
+            "match": "opencode-go/deepseek-*-flash",
+            "name": "DeepSeek Flash (latest)",
+            "select": { "strategy": "latest" }
+          },
+          "github-copilot/gemini-flash": {
+            "match": "github-copilot/gemini-*-flash",
+            "name": "Gemini Flash (latest)",
+            "select": { "strategy": "latest" }
+          },
+          "opencode-go/glm-flash": {
+            "match": "opencode-go/glm-*-flash",
+            "name": "GLM Flash (latest)",
+            "select": { "strategy": "latest" }
+          },
+          "opencode-go/qwen-flash": {
+            "match": "opencode-go/qwen*-flash",
+            "name": "Qweb Flash (latest)",
+            "select": { "strategy": "latest" }
+          }
+        }
+      }
+    },
+    "oh-my-opencode-slim@latest",
+    "@slkiser/opencode-quota@latest"
+  ],
   "default_agent": "plan",
   "share": "disabled",
   "permissions": [

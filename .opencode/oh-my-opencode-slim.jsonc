@@ -1,15 +1,15 @@
-// oh-my-opencode-slim — FULL config for the prisamedia workspace.
+// oh-my-opencode-slim — FULL config for the opensource workspace.
 //
 // Source snapshot: ~/.config/opencode/oh-my-opencode-slim.json (dotfiles).
 // Precedence: project config (.opencode/) overrides user config, so anything
-// defined here wins inside this repo. Keep it in sync with your dotfiles by
+// defined here wins inside this workspace. Keep it in sync with your dotfiles by
 // hand — changes to the dotfiles copy do NOT apply here automatically.
 //
 // Preset renamed to "default" on purpose: it is the default preset of this
 // workspace, and pinning it here blocks preset switching from the TUI while
-// you are inside this repo (expected behaviour, not a bug).
+// you are inside this workspace (expected behaviour, not a bug).
 //
-// No repo-specific agents (see AGENTS.md section 6 for routing).
+// No workspace-local agents (see AGENTS.md).
 //
 // Apply: restart OpenCode.
 
@@ -19,11 +19,11 @@
   "presets": {
     "default": {
       "orchestrator": {
-        "model": "openai/gpt-6-luna",
+        "model": "openai/gpt-luna",
         "variant": "high"
       },
       "oracle": {
-        "model": "openai/gpt-6-sol",
+        "model": "openai/gpt-sol",
         "variant": "high"
       },
       "council": {
@@ -35,24 +35,22 @@
         "variant": "medium"
       },
       "librarian": {
-        "model": "opencode-go/deepseek-v4.1-flash",
+        "model": "opencode-go/deepseek-flash",
         "variant": "low"
       },
       "explorer": {
-        "model": "opencode-go/deepseek-v4.1-flash",
-        "variant": "low",
-        "mcps": ["atlassian"]
+        "model": "opencode-go/deepseek-flash",
+        "variant": "low"
       },
       "designer": {
-        "model": "github-copilot/gemini-3.8-flash",
-        "mcps": ["playwright"]
+        "model": "github-copilot/gemini-flash"
       },
       "fixer": {
-        "model": "opencode-go/glm-5.3-flash",
+        "model": "opencode-go/glm-flash",
         "variant": "high"
       },
       "observer": {
-        "model": "opencode-go/qwen3.8-flash"
+        "model": "opencode-go/qwen-flash"
       }
     }
   },
